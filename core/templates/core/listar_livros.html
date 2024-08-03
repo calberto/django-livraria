@@ -1,0 +1,36 @@
+{%  extends 'core/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+   {% block content %}
+    <h1>Lista de Livros</h1>
+        {% for livro in livros %}
+            Nome: {{ livro.nome }}<br/>
+            Código: {{ livro.codigo }}<br/>
+            Ano: {{ livro.ano }}<br/>
+                
+            <a href="{% url 'detalhar_livro' id=livro.id %}">
+                <img height="300" width="200" src="{{ core.img.url }}" />    
+
+                <!--<img height="300" width="200" src="/static/img/friend.jpg"/>-->
+                
+            </a>
+            <br/>
+            
+            Valor: {{ livro.valor }}<br/>
+            Autores: <br/>
+            {% for nome in livro.autor.all %}
+                {{ nome }}<br/>
+            {% endfor %}     
+            <br>
+        {% endfor %}
+{% endblock %} 
+</body>
+</html>
