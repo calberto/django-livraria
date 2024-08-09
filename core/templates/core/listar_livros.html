@@ -1,36 +1,69 @@
-{%  extends 'core/base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="utf-8">
-    <title></title>
-</head>
+{% block menu%}
+<ul class="nav nav-tabs">
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'core_home' %} ">Home</a>
+	</li>
+	<li class="nav-item active dropdown">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle  active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+				aria-expanded="false">Servicos</a>
+			<div class="dropdown-menu">
+				<a class="dropdown-item active" href="{% url 'core_listar_livros' %}">Livros</a>
+				<a class="dropdown-item" href="{% url 'core_listar_categorias' %}">Categorias</a>
+				<a class="dropdown-item" href="{% url 'core_listar_autores' %}">Autores</a>
 
-<body>
-   {% block content %}
-    <h1>Lista de Livros</h1>
-        {% for livro in livros %}
-            Nome: {{ livro.nome }}<br/>
-            Código: {{ livro.codigo }}<br/>
-            Ano: {{ livro.ano }}<br/>
-                
-            <a href="{% url 'detalhar_livro' id=livro.id %}">
-                <img height="300" width="200" src="{{ core.img.url }}" />    
+			</div>
+		</li>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'core_home' %} ">Logout</a>
+	</li>
 
-                <!--<img height="300" width="200" src="/static/img/friend.jpg"/>-->
-                
-            </a>
-            <br/>
-            
-            Valor: {{ livro.valor }}<br/>
-            Autores: <br/>
-            {% for nome in livro.autor.all %}
-                {{ nome }}<br/>
-            {% endfor %}     
-            <br>
-        {% endfor %}
-{% endblock %} 
-</body>
-</html>
+</ul>
+{% endblock%}
+
+
+{% block main %} 
+
+		
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>Cadastro</h1>
+			<form action="{% url 'core_cadastrar_livro'  %}" method="POST">
+				{% csrf_token %}
+				
+				{{ form.as_p}}
+				
+				<button type="submit" class="btn btn-primary">Cadastrar</button>
+			</form>
+		</div>
+	
+		<div class="col-sm-6">
+			<h1>Lista  Livros</h1>
+			<table class="table">
+				<thead class="thead-dark">
+				  <tr>
+					<th scope="col">ID</th>
+					<th scope="col">Nome</th>
+					<th scope="col">Quantidade</th>
+					<th scope="col">Imagem</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  {% for livro in livros %}
+					<tr>
+						<th scope="row">{{ livro.id}}</th>
+						<td>{{ livro.nome}}</td>
+						<td>{{ livro.quantidade}}</td>
+						<td><img height="100" width="80" src="{{ livro.imagem.url}}"</td>
+					</tr>
+				  {% endfor %}
+				 
+				</tbody>
+			  </table>
+	
+		<div>
+	</div>
+{% endblock %}

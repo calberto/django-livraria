@@ -1,15 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar categorias</title>
-</head>
-<body>
-    <h3>Lista das nossas categorias</h3>
+{% extends 'base.html' %}
 
-    {% for categoria in categorias %}
-        {{ categoria.nome}}
-    {% endfor %}
-</body>
-</html>
+{% block menu%}
+<ul class="nav nav-tabs">
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'core_home' %} ">Home</a>
+	</li>
+	<li class="nav-item active dropdown">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle  active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+				aria-expanded="false">Servicos</a>
+			<div class="dropdown-menu">
+				<a class="dropdown-item active" href="{% url 'core_listar_categorias' %}">Categoria</a>
+				<a class="dropdown-item" href="{% url 'core_listar_categorias' %}">Categorias</a>
+				<a class="dropdown-item" href="{% url 'core_listar_autores' %}">Autores</a>
+
+			</div>
+		</li>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'core_home' %} ">Logout</a>
+	</li>
+
+</ul>
+{% endblock%}
+
+{% block main %} 
+
+		
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>Cadastro</h1>
+			<form action="{% url 'core_cadastrar_categoria'  %}" method="POST">
+				{% csrf_token %}
+				
+				{{ form.as_p}}
+				
+				<button type="submit" class="btn btn-primary">Cadastrar</button>
+			</form>
+		</div>
+	
+		<div class="col-sm-6">
+			<h1>Lista  Categorias</h1>
+			<table class="table">
+				<thead class="thead-dark">
+				  <tr>
+					<th scope="col">ID</th>
+					<th scope="col">Nome</th>
+					
+				  </tr>
+				</thead>
+				<tbody>
+				  {% for categoria in categorias %}
+					<tr>
+						<th scope="row">{{ categoria.id}}</th>
+						<td>{{ categoria.nome}}</td>
+						
+					</tr>
+				  {% endfor %}
+				 
+				</tbody>
+			  </table>
+	
+		<div>
+	</div>
+{% endblock %}
