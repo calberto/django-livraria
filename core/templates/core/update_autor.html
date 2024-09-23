@@ -1,0 +1,9 @@
+
+<h2>Updating Autor: {{ autor }}</h2>
+<form action="{% url 'core_autor_update' autor.autor_id %}" method="POST">
+	{% csrf_token %}
+	
+	{{ form.as_p }}
+	
+	<button type="submit">Atualizar</button>
+</form>
